@@ -92,6 +92,8 @@ namespace Mask
             {
                 Enums.MaskType.None,
             };
+            
+            OnMaskUpdated?.Invoke(_availableMasks);
         }
     }
 }
