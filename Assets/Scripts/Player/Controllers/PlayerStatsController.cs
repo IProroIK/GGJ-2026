@@ -19,6 +19,8 @@ namespace Player.Controllers
 
         private void OnMaskEquipEventHandler(Enums.MaskType type)
         {
+            ResetToDefault();
+            
             switch (type)
             {
                 case Enums.MaskType.Strength:
@@ -29,14 +31,15 @@ namespace Player.Controllers
                 case Enums.MaskType.Agility:
                     _playerStats.JumpCountModifier = 2;
                     break;
-                default:
-                    _playerStats.GravityModifier = 1;
-                    _playerStats.JumpForceModifier = 1;
-                    _playerStats.SpeedModifier = 1;
-                    _playerStats.JumpCountModifier = 1;
-                    break;
-                    
             }
+        }
+
+        private void ResetToDefault()
+        {
+            _playerStats.GravityModifier = 1;
+            _playerStats.JumpForceModifier = 1;
+            _playerStats.SpeedModifier = 1;
+            _playerStats.JumpCountModifier = 1;
         }
     }
 }
