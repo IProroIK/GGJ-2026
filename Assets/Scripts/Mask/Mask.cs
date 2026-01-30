@@ -16,7 +16,7 @@ namespace Mask
         private const float MoveTime = 2f;
         
         [Inject]
-        private void Constract(MaskManager maskManager)
+        private void Construct(MaskManager maskManager)
         {
             _maskManager = maskManager;
         }

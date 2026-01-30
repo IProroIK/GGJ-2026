@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;

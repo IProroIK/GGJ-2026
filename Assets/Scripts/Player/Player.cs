@@ -33,7 +33,7 @@ namespace Player
         private MaskManager _maskManager;
 
         [Inject]
-        private void Constact(MaskManager maskManager)
+        private void Construct(MaskManager maskManager)
         {
             _maskManager = maskManager;
         }
