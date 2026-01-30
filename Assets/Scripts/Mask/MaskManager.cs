@@ -25,13 +25,7 @@ namespace Mask
                 Enums.MaskType.None,
             };
         }
-
-        private void Start()
-        {
-            
-            AddMask(Enums.MaskType.Strength);
-        }
-
+        
         private void Update()
         {
 #if UNITY_EDITOR

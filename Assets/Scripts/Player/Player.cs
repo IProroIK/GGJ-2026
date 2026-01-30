@@ -1,7 +1,9 @@
+using Mask;
 using Player.Controllers;
 using Player.Model;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Player
 {
@@ -16,6 +18,7 @@ namespace Player
 
         private PlayerMovementController _movement;
         private PlayerAnimationController _animation;
+        private PlayerStatsController _playerStatsController;
         private PlayerInputActions _input;
         private InputAction _moveAction;
 
@@ -27,7 +30,14 @@ namespace Player
         private Vector2 _mouseScreenPos;
 
         private CharacterController _controller;
+        private MaskManager _maskManager;
 
+        [Inject]
+        private void Constact(MaskManager maskManager)
+        {
+            _maskManager = maskManager;
+        }
+        
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
@@ -36,9 +46,7 @@ namespace Player
 
             _movement = new PlayerMovementController(
                 motor,
-                _playerStats.speed,
-                _playerStats.gravity,
-                _playerStats.jumpForce
+                _playerStats
             );
 
             _animation = new PlayerAnimationController(
@@ -47,6 +55,8 @@ namespace Player
             
             _input = new PlayerInputActions();
             _moveAction = _input.FindAction("Move");
+
+            _playerStatsController = new PlayerStatsController(_maskManager, _playerStats);
         }
 
         private void OnEnable()

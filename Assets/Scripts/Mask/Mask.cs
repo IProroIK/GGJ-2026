@@ -48,6 +48,8 @@ namespace Mask
             {
                 _maskManager.AddMask(_maskType);
             }
+            
+            Destroy(gameObject);
         }
         
     }
