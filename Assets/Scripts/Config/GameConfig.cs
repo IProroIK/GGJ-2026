@@ -1,4 +1,5 @@
 ﻿using System;
+using Mask;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,4 +15,5 @@ public class GameConfig : ScriptableObject
 public class GamePlayVariablesEditor
 {
     [field: SerializeField, FoldoutGroup("Delays")] public float ChangeStateToTopGame { get; private set; } = 1f;
+    [field: SerializeField, FoldoutGroup("Config")] public MasksData MaskData { get; private set; }
 }
