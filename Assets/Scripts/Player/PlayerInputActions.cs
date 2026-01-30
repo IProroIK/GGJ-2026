@@ -145,6 +145,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DragStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""ed30afa2-f6e9-4487-ba0f-62b5786ab8e0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -279,6 +288,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d58079be-6d42-469b-b171-eebe31a77306"",
+                    ""path"": ""<Mouse>/{PrimaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DragStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -293,6 +313,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
         m_Gameplay_OpenMaskPopup = m_Gameplay.FindAction("OpenMaskPopup", throwIfNotFound: true);
         m_Gameplay_Navigate = m_Gameplay.FindAction("Navigate", throwIfNotFound: true);
+        m_Gameplay_DragStart = m_Gameplay.FindAction("DragStart", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -379,6 +400,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Run;
     private readonly InputAction m_Gameplay_OpenMaskPopup;
     private readonly InputAction m_Gameplay_Navigate;
+    private readonly InputAction m_Gameplay_DragStart;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -414,6 +436,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Navigate".
         /// </summary>
         public InputAction @Navigate => m_Wrapper.m_Gameplay_Navigate;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/DragStart".
+        /// </summary>
+        public InputAction @DragStart => m_Wrapper.m_Gameplay_DragStart;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -458,6 +484,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Navigate.started += instance.OnNavigate;
             @Navigate.performed += instance.OnNavigate;
             @Navigate.canceled += instance.OnNavigate;
+            @DragStart.started += instance.OnDragStart;
+            @DragStart.performed += instance.OnDragStart;
+            @DragStart.canceled += instance.OnDragStart;
         }
 
         /// <summary>
@@ -487,6 +516,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Navigate.started -= instance.OnNavigate;
             @Navigate.performed -= instance.OnNavigate;
             @Navigate.canceled -= instance.OnNavigate;
+            @DragStart.started -= instance.OnDragStart;
+            @DragStart.performed -= instance.OnDragStart;
+            @DragStart.canceled -= instance.OnDragStart;
         }
 
         /// <summary>
@@ -569,5 +601,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnNavigate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DragStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDragStart(InputAction.CallbackContext context);
     }
 }
