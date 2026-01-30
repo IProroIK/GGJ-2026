@@ -9,24 +9,31 @@ namespace Player.Model
         [SerializeField] private float speed;
         [SerializeField] private float gravity;
         [SerializeField] private float jumpForce;
+        [SerializeField] private int jumpCount = 1;
 
-        public float speedModifier = 1;
-        public float gravityModifier = 1;
-        public float jumpForceModifier = 1;
+        [HideInInspector] public float SpeedModifier = 1;
+        [HideInInspector] public float GravityModifier = 1;
+        [HideInInspector] public float JumpForceModifier = 1;
+        [HideInInspector] public int JumpCountModifier = 1;
         
         public float GetSpeed()
         {
-            return speed * speedModifier;
+            return speed * SpeedModifier;
         }
 
         public float GetGravity()
         {
-            return gravity * gravityModifier;
+            return gravity * GravityModifier;
         }
 
         public float GetJumpForce()
         {
-            return jumpForce * jumpForceModifier;
+            return jumpForce * JumpForceModifier;
+        }
+
+        public int GetJumpCount()
+        {
+            return jumpCount *  JumpCountModifier;
         }
     }
 }

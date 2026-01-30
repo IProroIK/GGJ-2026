@@ -12,7 +12,7 @@ namespace Mask
         [SerializeField] private float moveDistance;
         private MaskManager _maskManager;
 
-        private Sequence _animationSequenceMove;
+        private Tween _rotationTween;
         private const float MoveTime = 2f;
         
         [Inject]
@@ -28,18 +28,25 @@ namespace Mask
 
         private void OnDisable()
         {
-            _animationSequenceMove?.Kill();
+            _rotationTween?.Kill();
         }
         
         private void StartAnimation()
         {
-            _animationSequenceMove?.Kill();
-            _animationSequenceMove =  DOTween.Sequence();
-                        
-            _animationSequenceMove.Append(_maskTransform.DOLocalMoveY(moveDistance, MoveTime))
-                .Join(_maskTransform.DOLocalRotate(new Vector3(359, 0, 0), MoveTime * 2, RotateMode.FastBeyond360))
-                .Append(_maskTransform.DOLocalMoveY(-moveDistance, MoveTime))
-                .SetEase(Ease.InOutCubic).SetLoops(-1, LoopType.Yoyo);
+            _rotationTween = _maskTransform
+                .DORotate(
+                    new Vector3(0f, 360f, 0f),
+                    2f,
+                    RotateMode.FastBeyond360
+                )
+                .SetEase(Ease.Linear)
+                .SetLoops(-1);
+
+            Vector3 startPos = _maskTransform.position;
+
+            _maskTransform.DOMoveY(startPos.y + 0.5f, 1f)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
         }
 
         private void OnTriggerEnter(Collider other)

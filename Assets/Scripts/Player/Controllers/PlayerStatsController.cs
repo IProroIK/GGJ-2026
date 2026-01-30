@@ -22,14 +22,18 @@ namespace Player.Controllers
             switch (type)
             {
                 case Enums.MaskType.Strength:
-                    _playerStats.gravityModifier = 2;
-                    _playerStats.jumpForceModifier = 0.5f;
-                    _playerStats.speedModifier = 0.6f;
+                    _playerStats.GravityModifier = 2;
+                    _playerStats.JumpForceModifier = 0.5f;
+                    _playerStats.SpeedModifier = 0.6f;
+                    break;
+                case Enums.MaskType.Agility:
+                    _playerStats.JumpCountModifier = 2;
                     break;
                 default:
-                    _playerStats.gravityModifier = 1;
-                    _playerStats.jumpForceModifier = 1;
-                    _playerStats.speedModifier = 1;
+                    _playerStats.GravityModifier = 1;
+                    _playerStats.JumpForceModifier = 1;
+                    _playerStats.SpeedModifier = 1;
+                    _playerStats.JumpCountModifier = 1;
                     break;
                     
             }
