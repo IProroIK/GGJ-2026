@@ -1,4 +1,5 @@
 using Player.Controllers;
+using Player.Model;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,9 +9,8 @@ namespace Player
     public sealed class Player : MonoBehaviour
     {
         [Header("Movement")]
-        [SerializeField] private float _speed = 5f;
-        [SerializeField] private float _gravity = 20f;
-        [SerializeField] private float _jumpForce = 7f;
+        [SerializeField] private Stats _playerStats;
+        
         [SerializeField] private LayerMask _groundMask;
         [SerializeField] private Camera _camera;
         
@@ -35,9 +35,9 @@ namespace Player
 
             _movement = new PlayerMovementController(
                 motor,
-                _speed,
-                _gravity,
-                _jumpForce
+                _playerStats.speed,
+                _playerStats.gravity,
+                _playerStats.jumpForce
             );
 
             _animation = new PlayerAnimationController(
@@ -77,15 +77,15 @@ namespace Player
 
         private void Update()
         {
-            _movement.Tick(_moveInput, _jumpPressed, Time.deltaTime, _runPressed);
-
             RotateTowardsMouse();
-
+            
             _animation.Tick(
                 _controller.velocity,
                 _controller.isGrounded,
                 _jumpPressed
             );
+            
+            _movement.Tick(_moveInput, _jumpPressed, Time.deltaTime, _runPressed);
 
             _jumpPressed = false;
         }
@@ -129,8 +129,6 @@ namespace Player
             {
                 _runPressed = true;
             }
-            
-            
         }
         
         private void OnRunCanceled(InputAction.CallbackContext ctx)
