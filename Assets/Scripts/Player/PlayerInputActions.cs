@@ -127,6 +127,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenMaskPopup"",
+                    ""type"": ""Button"",
+                    ""id"": ""d4344d32-ac0a-46f9-bc67-7d4507289881"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -217,6 +226,67 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d261945c-95d1-4458-9073-1b322b8fde14"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenMaskPopup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""MaskScrollable"",
+            ""id"": ""70beb9e8-55c7-41a3-a901-c07ca9e3715b"",
+            ""actions"": [
+                {
+                    ""name"": ""Navigate"",
+                    ""type"": ""Value"",
+                    ""id"": ""0b3e2de5-afe2-476c-aa09-3027ac4f7b13"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""3ebaf557-e31a-449a-9124-4f5dd6a27d6c"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""edb93581-7dce-4b3d-8828-a2c5f62d2052"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4a9101f9-efa8-445e-bffe-4df651bb52d0"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -229,11 +299,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_LookPosition = m_Gameplay.FindAction("LookPosition", throwIfNotFound: true);
         m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
+        m_Gameplay_OpenMaskPopup = m_Gameplay.FindAction("OpenMaskPopup", throwIfNotFound: true);
+        // MaskScrollable
+        m_MaskScrollable = asset.FindActionMap("MaskScrollable", throwIfNotFound: true);
+        m_MaskScrollable_Navigate = m_MaskScrollable.FindAction("Navigate", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
     {
         UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, PlayerInputActions.Gameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_MaskScrollable.enabled, "This will cause a leak and performance issues, PlayerInputActions.MaskScrollable.Disable() has not been called.");
     }
 
     /// <summary>
@@ -313,6 +388,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_LookPosition;
     private readonly InputAction m_Gameplay_Run;
+    private readonly InputAction m_Gameplay_OpenMaskPopup;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -340,6 +416,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Run".
         /// </summary>
         public InputAction @Run => m_Wrapper.m_Gameplay_Run;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/OpenMaskPopup".
+        /// </summary>
+        public InputAction @OpenMaskPopup => m_Wrapper.m_Gameplay_OpenMaskPopup;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -378,6 +458,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @OpenMaskPopup.started += instance.OnOpenMaskPopup;
+            @OpenMaskPopup.performed += instance.OnOpenMaskPopup;
+            @OpenMaskPopup.canceled += instance.OnOpenMaskPopup;
         }
 
         /// <summary>
@@ -401,6 +484,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @OpenMaskPopup.started -= instance.OnOpenMaskPopup;
+            @OpenMaskPopup.performed -= instance.OnOpenMaskPopup;
+            @OpenMaskPopup.canceled -= instance.OnOpenMaskPopup;
         }
 
         /// <summary>
@@ -434,6 +520,102 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="GameplayActions" /> instance referencing this action map.
     /// </summary>
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // MaskScrollable
+    private readonly InputActionMap m_MaskScrollable;
+    private List<IMaskScrollableActions> m_MaskScrollableActionsCallbackInterfaces = new List<IMaskScrollableActions>();
+    private readonly InputAction m_MaskScrollable_Navigate;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "MaskScrollable".
+    /// </summary>
+    public struct MaskScrollableActions
+    {
+        private @PlayerInputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public MaskScrollableActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "MaskScrollable/Navigate".
+        /// </summary>
+        public InputAction @Navigate => m_Wrapper.m_MaskScrollable_Navigate;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_MaskScrollable; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="MaskScrollableActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(MaskScrollableActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="MaskScrollableActions" />
+        public void AddCallbacks(IMaskScrollableActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MaskScrollableActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MaskScrollableActionsCallbackInterfaces.Add(instance);
+            @Navigate.started += instance.OnNavigate;
+            @Navigate.performed += instance.OnNavigate;
+            @Navigate.canceled += instance.OnNavigate;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="MaskScrollableActions" />
+        private void UnregisterCallbacks(IMaskScrollableActions instance)
+        {
+            @Navigate.started -= instance.OnNavigate;
+            @Navigate.performed -= instance.OnNavigate;
+            @Navigate.canceled -= instance.OnNavigate;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="MaskScrollableActions.UnregisterCallbacks(IMaskScrollableActions)" />.
+        /// </summary>
+        /// <seealso cref="MaskScrollableActions.UnregisterCallbacks(IMaskScrollableActions)" />
+        public void RemoveCallbacks(IMaskScrollableActions instance)
+        {
+            if (m_Wrapper.m_MaskScrollableActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="MaskScrollableActions.AddCallbacks(IMaskScrollableActions)" />
+        /// <seealso cref="MaskScrollableActions.RemoveCallbacks(IMaskScrollableActions)" />
+        /// <seealso cref="MaskScrollableActions.UnregisterCallbacks(IMaskScrollableActions)" />
+        public void SetCallbacks(IMaskScrollableActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MaskScrollableActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MaskScrollableActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="MaskScrollableActions" /> instance referencing this action map.
+    /// </summary>
+    public MaskScrollableActions @MaskScrollable => new MaskScrollableActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -469,5 +651,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRun(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenMaskPopup" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenMaskPopup(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "MaskScrollable" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="MaskScrollableActions.AddCallbacks(IMaskScrollableActions)" />
+    /// <seealso cref="MaskScrollableActions.RemoveCallbacks(IMaskScrollableActions)" />
+    public interface IMaskScrollableActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Navigate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNavigate(InputAction.CallbackContext context);
     }
 }
