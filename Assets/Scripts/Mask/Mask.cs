@@ -55,7 +55,7 @@ namespace Mask
             {
                 _maskManager.AddMask(_maskType);
             }
-            
+            _rotationTween?.Kill();
             Destroy(gameObject);
         }
         
