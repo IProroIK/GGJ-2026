@@ -19,5 +19,13 @@ MonoBehaviour:
     MaskDescription: 
   - MaskType: 1
     MaskSprite: {fileID: 21300000, guid: 0358e94906c704657ab9ca0a8ce5a588, type: 3}
-    MaskName: 
-    MaskDescription: 
+    MaskName: Mask of Strength
+    MaskDescription: You can move the blocks
+  - MaskType: 3
+    MaskSprite: {fileID: 21300000, guid: aef20f8e21ef14da9ba50e7d8df50510, type: 3}
+    MaskName: Mask of Speed
+    MaskDescription: You move faster
+  - MaskType: 2
+    MaskSprite: {fileID: 21300000, guid: 35b4f3b51c8fc4c48ba3f7750be46e4b, type: 3}
+    MaskName: Mask of Vision
+    MaskDescription: You can see hiden

@@ -13,10 +13,11 @@ namespace Player
         
         [SerializeField] private LayerMask _groundMask;
         [SerializeField] private Camera _camera;
-        
+
         private PlayerMovementController _movement;
         private PlayerAnimationController _animation;
         private PlayerInputActions _input;
+        private InputAction _moveAction;
 
         private Vector2 _moveInput;
         private bool _jumpPressed;
@@ -43,8 +44,9 @@ namespace Player
             _animation = new PlayerAnimationController(
                 GetComponent<Animator>()
             );
-
+            
             _input = new PlayerInputActions();
+            _moveAction = _input.FindAction("Move");
         }
 
         private void OnEnable()
@@ -89,7 +91,15 @@ namespace Player
 
             _jumpPressed = false;
         }
-        
+
+        public void SwitchInputAsses(bool isEnabled)
+        {
+            if(isEnabled)
+                _moveAction.Enable();
+            else
+                _moveAction.Disable();
+        }
+
         private void RotateTowardsMouse()
         {
             Ray ray = _camera.ScreenPointToRay(_mouseScreenPos);
@@ -106,7 +116,7 @@ namespace Player
                 transform.rotation = targetRotation;
             }
         }
-        
+
         private void OnLook(InputAction.CallbackContext ctx)
         {
             _mouseScreenPos = ctx.ReadValue<Vector2>();
@@ -122,7 +132,7 @@ namespace Player
             if (ctx.performed)
                 _jumpPressed = true;
         }
-        
+
         private void OnRun(InputAction.CallbackContext ctx)
         {
             if (ctx.started)
@@ -130,7 +140,7 @@ namespace Player
                 _runPressed = true;
             }
         }
-        
+
         private void OnRunCanceled(InputAction.CallbackContext ctx)
         {
             if (ctx.canceled)

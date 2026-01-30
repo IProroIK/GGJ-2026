@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Navigate",
+                    "type": "Value",
+                    "id": "b07fe9d2-b71b-418b-8cc0-bd71a71029c3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -151,29 +160,12 @@
                     "action": "OpenMaskPopup",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "MaskScrollable",
-            "id": "70beb9e8-55c7-41a3-a901-c07ca9e3715b",
-            "actions": [
-                {
-                    "name": "Navigate",
-                    "type": "Value",
-                    "id": "0b3e2de5-afe2-476c-aa09-3027ac4f7b13",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "1D Axis",
-                    "id": "3ebaf557-e31a-449a-9124-4f5dd6a27d6c",
+                    "id": "83d02d89-ca7b-441d-a85e-37f235e6abc0",
                     "path": "1DAxis",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Navigate",
@@ -182,7 +174,7 @@
                 },
                 {
                     "name": "negative",
-                    "id": "edb93581-7dce-4b3d-8828-a2c5f62d2052",
+                    "id": "6be896d9-284d-4502-bb00-887001ec7e20",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -193,7 +185,7 @@
                 },
                 {
                     "name": "positive",
-                    "id": "4a9101f9-efa8-445e-bffe-4df651bb52d0",
+                    "id": "df0c09a0-1912-4f25-bdbf-6ad222d152fb",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",

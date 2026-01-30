@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Settings;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Mask
 {
@@ -21,9 +23,25 @@ namespace Mask
             _availableMasks = new List<Enums.MaskType>()
             {
                 Enums.MaskType.None,
-                Enums.MaskType.None,
-                Enums.MaskType.None,
             };
+        }
+
+        private void Start()
+        {
+            
+            AddMask(Enums.MaskType.Strength);
+        }
+
+        private void Update()
+        {
+#if UNITY_EDITOR
+            if (Keyboard.current.tKey.wasPressedThisFrame)
+            {
+                AddMask(Enums.MaskType.Agility);
+
+                Debug.Log("F9 pressed → debug logic here");
+            }
+#endif
         }
         
         public void SetMask(Enums.MaskType mask)
