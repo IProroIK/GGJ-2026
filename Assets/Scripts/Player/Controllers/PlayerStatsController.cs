@@ -24,6 +24,7 @@ namespace Player.Controllers
             switch (type)
             {
                 case Enums.MaskType.Strength:
+                    case Enums.MaskType.Mover:
                     _playerStats.GravityModifier = 2;
                     _playerStats.JumpForceModifier = 0.5f;
                     _playerStats.SpeedModifier = 0.6f;

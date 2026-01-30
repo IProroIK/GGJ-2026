@@ -29,3 +29,7 @@ MonoBehaviour:
     MaskSprite: {fileID: 21300000, guid: 35b4f3b51c8fc4c48ba3f7750be46e4b, type: 3}
     MaskName: Mask of Vision
     MaskDescription: You can see hiden
+  - MaskType: 4
+    MaskSprite: {fileID: 21300000, guid: cb873b07dc75243c1942d89018500c32, type: 3}
+    MaskName: Mask of Move
+    MaskDescription: Move it

@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Objectives.LevelManager
   _levels:
+  - Level: {fileID: 7326482689145186518, guid: 79c6085a2322bae40bc5c357f5625b70, type: 3}
+    PlayerPosition: {fileID: 1472504043}
   - Level: {fileID: 1599356957642811076, guid: 4cc1f4d0dca7bf44f9ea66ef5a2609e6, type: 3}
     PlayerPosition: {fileID: 1611112207}
 --- !u!1 &129006903
@@ -333,6 +335,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1611112207}
+  - {fileID: 1472504043}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &240950233
@@ -554,6 +557,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1442583034078593014, guid: 33d96bc0fbb547a40b435e4c6da868c3, type: 3}
   m_PrefabInstance: {fileID: 1125130499}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &374031649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Gameplay/DragStart
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: a27c73d452eab7546969457232f9d8d3, type: 3}
+  m_ActionId: ed30afa2-f6e9-4487-ba0f-62b5786ab8e0
 --- !u!1001 &376314707
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1233,6 +1250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1160926651}
   - component: {fileID: 1160926650}
+  - component: {fileID: 1160926652}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -1277,6 +1295,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1160926652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160926649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4115f8e517242ab4294bbea45be4c1f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mask.Controllers.PhysicsDragController
+  lookPositionAction: {fileID: 1956683206}
+  dragAction: {fileID: 374031649}
+  _dragForce: 50
+  _dragDamping: 5
+  _maxDragDistance: 10
+  _draggableLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _raycastDistance: 100
+  _mainCamera: {fileID: 2099933487}
 --- !u!1 &1304596790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,6 +1675,37 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &1472504042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1472504043}
+  m_Layer: 0
+  m_Name: Level2
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1472504043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472504042}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4, y: -4.5, z: 15.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 145371198}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1536405845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2089,6 +2160,20 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04ee1383f94d5714788c4d34ce12faf6, type: 3}
+--- !u!114 &1956683206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Gameplay/LookPosition
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: a27c73d452eab7546969457232f9d8d3, type: 3}
+  m_ActionId: cf2fbd69-fc98-4dcc-b40b-54f31251ebd3
 --- !u!1 &2099933483
 GameObject:
   m_ObjectHideFlags: 0
