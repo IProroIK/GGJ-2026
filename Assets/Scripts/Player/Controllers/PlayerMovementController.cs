@@ -11,7 +11,8 @@ namespace Player.Controllers
         private readonly float _jumpForce;
 
         private float _verticalVelocity;
-
+        private const float RunSpeedModifier = 1.6f;
+        
         public PlayerMovementController(
             IPlayerMotor motor,
             float speed,
@@ -24,9 +25,11 @@ namespace Player.Controllers
             _jumpForce = jumpForce;
         }
 
-        public void Tick(Vector2 moveInput, bool jumpPressed, float deltaTime)
+        public void Tick(Vector2 moveInput, bool jumpPressed, float deltaTime, bool isRunning)
         {
-            Vector3 move = new Vector3(moveInput.x, 0, moveInput.y) * _speed;
+            var speed = isRunning ? _speed * RunSpeedModifier : _speed;
+            
+            Vector3 move = new Vector3(moveInput.x, 0, moveInput.y) * speed;
 
             if (_motor.IsGrounded)
             {

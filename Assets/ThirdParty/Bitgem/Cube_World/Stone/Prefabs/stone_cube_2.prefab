@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4332611489187480}
   - component: {fileID: 33456538048778402}
   - component: {fileID: 23117634944616134}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: block_stone1_2_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4065223895735050}
   - component: {fileID: 205495915376562104}
   - component: {fileID: 1478628188435696225}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: stone_cube_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 4495577186291620}
   - component: {fileID: 33448626537946436}
   - component: {fileID: 23168606220843764}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: block_stone1_2_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 4777318249114078}
   - component: {fileID: 33896235126418062}
   - component: {fileID: 23342898002557264}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: block_stone1_2_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
