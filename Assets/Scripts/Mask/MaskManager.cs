@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Objectives;
 using Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Mask
 {
@@ -16,15 +18,36 @@ namespace Mask
         public Enums.MaskType CurrentMask { get; private set; }
 
         private List<Enums.MaskType> _availableMasks;
+        private LevelManager _levelManager;
 
+        [Inject]
+        private void Construct(LevelManager levelManager)
+        {
+            _levelManager = levelManager;
+        }
+        
         private void Awake()
         {
             _availableMasks = new List<Enums.MaskType>()
             {
                 Enums.MaskType.None,
             };
+
+            _levelManager.LevelChanged += LevelChangedEventHandler;
+            _levelManager.LevelRestarted += LevelChangedEventHandler;
         }
-        
+
+        private void OnDestroy()
+        {
+            _levelManager.LevelChanged -= LevelChangedEventHandler;
+            _levelManager.LevelRestarted -= LevelChangedEventHandler;
+        }
+
+        private void LevelChangedEventHandler()
+        {
+            Reset();
+        }
+
         private void Update()
         {
 #if UNITY_EDITOR
@@ -61,6 +84,14 @@ namespace Mask
             _availableMasks.Remove(mask);
             
             OnMaskUpdated?.Invoke(_availableMasks);
+        }
+
+        private void Reset()
+        {
+            _availableMasks = new List<Enums.MaskType>()
+            {
+                Enums.MaskType.None,
+            };
         }
     }
 }

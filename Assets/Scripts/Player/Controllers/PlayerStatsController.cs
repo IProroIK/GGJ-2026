@@ -34,7 +34,7 @@ namespace Player.Controllers
             }
         }
 
-        private void ResetToDefault()
+        public void ResetToDefault()
         {
             _playerStats.GravityModifier = 1;
             _playerStats.JumpForceModifier = 1;

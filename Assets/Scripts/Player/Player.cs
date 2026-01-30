@@ -1,4 +1,6 @@
+using System;
 using Mask;
+using Objectives;
 using Player.Controllers;
 using Player.Model;
 using UnityEngine;
@@ -31,10 +33,12 @@ namespace Player
 
         private CharacterController _controller;
         private MaskManager _maskManager;
+        private LevelManager _levelManager;
 
         [Inject]
-        private void Construct(MaskManager maskManager)
+        private void Construct(MaskManager maskManager, LevelManager levelManager)
         {
+            _levelManager = levelManager;
             _maskManager = maskManager;
         }
         
@@ -57,6 +61,15 @@ namespace Player
             _moveAction = _input.FindAction("Move");
 
             _playerStatsController = new PlayerStatsController(_maskManager, _playerStats);
+
+            _levelManager.LevelChanged += LevelChangedEventHandler;
+            _levelManager.LevelRestarted += LevelChangedEventHandler;
+        }
+
+        private void OnDestroy()
+        {
+            _levelManager.LevelChanged -= LevelChangedEventHandler;
+            _levelManager.LevelRestarted -= LevelChangedEventHandler;
         }
 
         private void OnEnable()
@@ -110,6 +123,11 @@ namespace Player
                 _moveAction.Disable();
         }
 
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
+
         private void RotateTowardsMouse()
         {
             Ray ray = _camera.ScreenPointToRay(_mouseScreenPos);
@@ -157,6 +175,11 @@ namespace Player
             {
                 _runPressed = false;
             }
+        }
+
+        private void LevelChangedEventHandler()
+        {
+            _playerStatsController.ResetToDefault();
         }
     }
 

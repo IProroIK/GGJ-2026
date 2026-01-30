@@ -51,12 +51,11 @@ namespace Mask
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out Player.Player player))
-            {
-                _maskManager.AddMask(_maskType);
-            }
+            if (!other.TryGetComponent(out Player.Player player)) return;
+            
+            _maskManager.AddMask(_maskType);
             _rotationTween?.Kill();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         
     }
