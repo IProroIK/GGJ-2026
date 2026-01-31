@@ -10,7 +10,7 @@ public class WorldPhaseController : MonoBehaviour
     [SerializeField] private List<Collider> _colliders;
     [SerializeField] private List<Material> _materials;
 
-    [SerializeField] private Enums.MaskType _maskType = Enums.MaskType.Intelligence;
+    [SerializeField] private Enums.MaskType _maskType = Enums.MaskType.Shadow;
     [SerializeField] private float _phaseDuration = 0.5f;
 
     private MaskManager _maskManager;

@@ -32,15 +32,15 @@ Material:
     - _Brightness: 2
     - _Contrast: 0.75
     - _Cull: 2
-    - _GridIntensity: 1.47
-    - _GridScale: 8
-    - _GridThickness: 0.09
-    - _HoloAlpha: 0.179
+    - _GridIntensity: 1.27
+    - _GridScale: 2
+    - _GridThickness: 0.031
+    - _HoloAlpha: 0
     - _OutlineAlpha: 0.4
-    - _OutlineWidth: 0.02
+    - _OutlineWidth: 0.0189
     - _Phase: 0
     - _RimIntensity: 1.11
-    - _RimPower: 1.53
+    - _RimPower: 1.22
     - _Saturation: 2
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
