@@ -171,6 +171,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "5105ef89-6123-414b-a0cf-a456c01c6353",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMaskPopup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
                     "id": "83d02d89-ca7b-441d-a85e-37f235e6abc0",
                     "path": "1DAxis",
