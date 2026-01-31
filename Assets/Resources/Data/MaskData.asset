@@ -18,22 +18,22 @@ MonoBehaviour:
     MaskName: None
     MaskDescription: 
   - MaskType: 1
-    MaskSprite: {fileID: 21300000, guid: 0358e94906c704657ab9ca0a8ce5a588, type: 3}
+    MaskSprite: {fileID: 21300000, guid: 95a0a6c6fc55bf748998d6ea7a565d26, type: 3}
     MaskName: Mask of Strength
     MaskDescription: You can move the blocks
   - MaskType: 3
-    MaskSprite: {fileID: 21300000, guid: aef20f8e21ef14da9ba50e7d8df50510, type: 3}
+    MaskSprite: {fileID: 21300000, guid: 154a86f0d3be2104d81f09b4344dd1d8, type: 3}
     MaskName: Mask of Speed
     MaskDescription: You move faster
   - MaskType: 2
-    MaskSprite: {fileID: 21300000, guid: 35b4f3b51c8fc4c48ba3f7750be46e4b, type: 3}
+    MaskSprite: {fileID: 21300000, guid: 406a9c554cee5d34ba86638da77496a1, type: 3}
     MaskName: Mask of Vision
     MaskDescription: You can see hiden
   - MaskType: 4
-    MaskSprite: {fileID: 21300000, guid: cb873b07dc75243c1942d89018500c32, type: 3}
+    MaskSprite: {fileID: 21300000, guid: f9b4bd9a1d96af14bbdb6b4c6077c5b6, type: 3}
     MaskName: Mask of Move
     MaskDescription: Move it
   - MaskType: 5
-    MaskSprite: {fileID: 21300000, guid: c50a0f6e42d5c4abeb157b1b97e14ae8, type: 3}
+    MaskSprite: {fileID: 21300000, guid: b96dcd99fb02b5446a5c5f5c05c406c1, type: 3}
     MaskName: Shadow
     MaskDescription: Can see what other cant

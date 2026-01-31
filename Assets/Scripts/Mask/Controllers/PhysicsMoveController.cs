@@ -20,7 +20,7 @@ public class PhysicsMoveController : MonoBehaviour
     [Header("Raycast Settings")]
     [SerializeField] private LayerMask _draggableLayer;
     [SerializeField] private float _raycastDistance = 100f;
-    [SerializeField] private Camera _mainCamera;
+    private Camera _mainCamera;
 
     private Rigidbody _currentDraggedObject;
     private float _originalLinearDamping;
@@ -37,6 +37,7 @@ public class PhysicsMoveController : MonoBehaviour
 
     private void Awake()
     {
+        _mainCamera = Camera.main;
         _maskManager.OnMaskUnequip += Reset;
         _maskManager.OnMaskEquip += Reset;
     }
