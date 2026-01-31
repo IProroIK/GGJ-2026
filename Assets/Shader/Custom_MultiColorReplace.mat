@@ -31,22 +31,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 0.08
-    - _Contrast: 1.4
+    - _Brightness: 0.1
+    - _Contrast: 1.22
     - _EnableReplace: 1
     - _EnableReplace1: 1
     - _EnableReplace2: 0
     - _EnableReplace3: 0
-    - _Range1: 1
+    - _Range1: 0
     - _Range2: 0
     - _Range3: 0
-    - _Saturation: 1.17
+    - _Saturation: 1.3
     m_Colors:
-    - _ColorFrom1: {r: 0, g: 0.6039216, b: 0.31764707, a: 1}
-    - _ColorFrom2: {r: 0, g: 0, b: 0, a: 1}
+    - _ColorFrom1: {r: 0, g: 0.627451, b: 0.35686275, a: 1}
+    - _ColorFrom2: {r: 0.60784316, g: 0, b: 0.59607846, a: 1}
     - _ColorFrom3: {r: 0, g: 0, b: 0, a: 1}
-    - _ColorTo1: {r: 1, g: 0.2235294, b: 0.88471377, a: 1}
-    - _ColorTo2: {r: 0, g: 0, b: 0, a: 1}
+    - _ColorTo1: {r: 0.3120869, g: 0.2235294, b: 1, a: 1}
+    - _ColorTo2: {r: 0, g: 1, b: 0.98154783, a: 1}
     - _ColorTo3: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

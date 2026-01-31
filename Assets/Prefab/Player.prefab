@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3648968721399509901}
   - component: {fileID: 1546262118823975517}
   - component: {fileID: 1796265310476210028}
+  - component: {fileID: 5209659523658045328}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -152,6 +153,43 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     _forceOffOnLevelRestart: 1
+--- !u!114 &5209659523658045328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17373528706877650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f7d577eb9f43ce92ab57a45a723de7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColorByMask
+  _renderer: {fileID: 7924779598724267936}
+  _materialIndex: 0
+  _enableReplace: 1
+  _enableReplaceSlot: 1
+  _fromColor: {r: 0, g: 0.6509804, b: 0.34901962, a: 1}
+  _defaultToColor: {r: 0, g: 0.6509804, b: 0.34901962, a: 1}
+  _defaultRange: 0
+  _tweenDuration: 1
+  _ease: 1
+  _rules:
+  - maskType: 0
+    colorTo: {r: 0, g: 0.6509804, b: 0.34901962, a: 1}
+    range: 0
+  - maskType: 1
+    colorTo: {r: 1, g: 0, b: 0, a: 1}
+    range: 0.2
+  - maskType: 2
+    colorTo: {r: 0, g: 0.6476085, b: 1, a: 1}
+    range: 0.2
+  - maskType: 3
+    colorTo: {r: 0, g: 0.6509804, b: 0.34901962, a: 1}
+    range: 0.2
+  - maskType: 4
+    colorTo: {r: 0.87941813, g: 0.5424528, b: 1, a: 1}
+    range: 0.2
 --- !u!1001 &2589786021346802890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -316,6 +354,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5623515599207203690, guid: 33d96bc0fbb547a40b435e4c6da868c3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 563af859a05a0d84a9643e0b78d22965, type: 2}
     - target: {fileID: 6041330210177057777, guid: 33d96bc0fbb547a40b435e4c6da868c3, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -518,6 +560,11 @@ MonoBehaviour:
   useLastAnimationState: 1
   maxBatches: 50
   meshPoolSize: 256
+--- !u!137 &7924779598724267936 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5623515599207203690, guid: 33d96bc0fbb547a40b435e4c6da868c3, type: 3}
+  m_PrefabInstance: {fileID: 2589786021346802890}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5828088052184504296
 PrefabInstance:
   m_ObjectHideFlags: 0
