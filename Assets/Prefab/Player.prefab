@@ -499,7 +499,7 @@ MonoBehaviour:
     colorTo: {r: 0.87941813, g: 0.5424528, b: 1, a: 1}
     range: 0.2
   - maskType: 5
-    colorTo: {r: 0, g: 0, b: 0, a: 1}
+    colorTo: {r: 1, g: 0.8431373, b: 0, a: 1}
     range: 0.2
 --- !u!1 &8268472903955878734
 GameObject:

@@ -225,7 +225,7 @@ namespace GameUI
             if(currentMaskModel.MaskType == Enums.MaskType.None)
                 _infoPopup.Hide();
             else
-                _infoPopup.Show($"{currentMaskModel.MaskName} \n\n {currentMaskModel.MaskDescription}", false);
+                _infoPopup.Show($"{currentMaskModel.MaskName} \n {currentMaskModel.MaskDescription}", false);
         }
 
         // ---------------- HELPERS ----------------

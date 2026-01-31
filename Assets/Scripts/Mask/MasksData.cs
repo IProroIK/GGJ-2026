@@ -17,7 +17,7 @@ namespace Mask
         public Enums.MaskType MaskType;
         public Sprite MaskSprite;
         public string MaskName;
-        public string MaskDescription;
+        [Sirenix.OdinInspector.MultiLineProperty(6)] public string MaskDescription;
     }
     
 }
