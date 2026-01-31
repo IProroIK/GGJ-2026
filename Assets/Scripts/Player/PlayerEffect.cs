@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using Mask;
 using Objectives;
 using Settings;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
 public class PlayerEffect : MonoBehaviour
 {
-    [Header("Rules")] [SerializeField] private List<TrailEffectPlayer> _effects = new();
+    [Header("Rules")] [SerializeField, TableList] private List<TrailEffectPlayer> _effects = new();
 
     private LevelManager _levelManager;
     private MaskManager _maskManager;

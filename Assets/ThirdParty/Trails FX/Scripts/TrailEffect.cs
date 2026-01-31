@@ -317,6 +317,15 @@ namespace TrailsFX {
         }
 
 
+        public void ApplyProfile(TrailEffectProfile preset)
+        {
+            profile = preset;        
+            profileSync = true;      
+
+            SetProfile(preset);     
+            UpdateMaterialProperties();
+            Clear();                 
+        }
 
         public void CheckEditorSettings() {
             if (target == null) {
@@ -1112,9 +1121,7 @@ namespace TrailsFX {
                     j--;
                 }
                 if (i <= j) {
-                    SnapshotIndex h = sortIndices[i];
-                    sortIndices[i] = sortIndices[j];
-                    sortIndices[j] = h;
+                    (sortIndices[i], sortIndices[j]) = (sortIndices[j], sortIndices[i]);
                     i++;
                     j--;
                 }

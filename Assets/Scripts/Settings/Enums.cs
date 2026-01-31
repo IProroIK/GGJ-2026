@@ -9,6 +9,7 @@ namespace Settings
             Intelligence = 2,
             Agility = 3,
             Mover = 4,
+            Shadow = 5,
         }
     }
 }
