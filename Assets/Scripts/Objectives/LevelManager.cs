@@ -39,9 +39,9 @@ namespace Objectives
 
         public void LoadNextLevel()
         {
-            CurrentLevelIndex++;
-            CurrentLevelIndex = Mathf.Clamp(CurrentLevelIndex + 1, 0, _levels.Count - 1);
             Destroy(CurrentLevel);
+            CurrentLevelIndex++;
+            CurrentLevelIndex = Mathf.Clamp(CurrentLevelIndex, 0, _levels.Count - 1);
             LoadLevel(CurrentLevelIndex);
         }
         

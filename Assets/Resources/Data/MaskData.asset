@@ -33,3 +33,7 @@ MonoBehaviour:
     MaskSprite: {fileID: 21300000, guid: cb873b07dc75243c1942d89018500c32, type: 3}
     MaskName: Mask of Move
     MaskDescription: Move it
+  - MaskType: 5
+    MaskSprite: {fileID: 21300000, guid: c50a0f6e42d5c4abeb157b1b97e14ae8, type: 3}
+    MaskName: Shadow
+    MaskDescription: Can see what other cant

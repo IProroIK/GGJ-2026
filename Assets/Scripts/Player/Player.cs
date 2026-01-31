@@ -126,7 +126,9 @@ namespace Player
 
         public void SetPosition(Vector3 position)
         {
+            _controller.enabled = false;
             transform.position = position;
+            _controller.enabled = true;
         }
 
         private void RotateTowardsMouse()
