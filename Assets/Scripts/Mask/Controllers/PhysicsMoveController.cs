@@ -1,4 +1,5 @@
-﻿using Settings;
+﻿using System;
+using Settings;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -33,7 +34,19 @@ public class PhysicsMoveController : MonoBehaviour
     {
         _maskManager = maskManager;
     }
-    
+
+    private void Awake()
+    {
+        _maskManager.OnMaskUnequip += Reset;
+        _maskManager.OnMaskEquip += Reset;
+    }
+
+    private void OnDestroy()
+    {
+        _maskManager.OnMaskUnequip -= Reset;
+        _maskManager.OnMaskEquip -= Reset;
+    }
+
     private void OnEnable()
     {
         dragAction.action.Enable();
@@ -50,6 +63,8 @@ public class PhysicsMoveController : MonoBehaviour
         
         dragAction.action.Disable();
         lookPositionAction.action.Disable();
+        
+
     }
 
     private void OnDragPerformed(InputAction.CallbackContext context)
@@ -120,6 +135,13 @@ public class PhysicsMoveController : MonoBehaviour
             Gizmos.DrawLine(_currentDraggedObject.position, _targetPosition);
             Gizmos.DrawWireSphere(_targetPosition, 0.2f);
         }
+    }
+    
+    private void Reset(Enums.MaskType obj)
+    {
+        if (_currentDraggedObject == null ) return;
+        _currentDraggedObject.linearDamping = 0.5f; 
+        _currentDraggedObject = null;
     }
 }
 
