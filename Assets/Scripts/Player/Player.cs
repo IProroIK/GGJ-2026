@@ -16,7 +16,7 @@ namespace Player
         [SerializeField] private Stats _playerStats;
         
         [SerializeField] private LayerMask _groundMask;
-        [SerializeField] private Camera _camera;
+        private Camera _camera;
 
         private PlayerMovementController _movement;
         private PlayerAnimationController _animation;
@@ -44,6 +44,7 @@ namespace Player
         
         private void Awake()
         {
+            _camera = Camera.main;
             _controller = GetComponent<CharacterController>();
 
             var motor = new CharacterControllerMotor(_controller);

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98a0befda4b1f449b9721f7f70b9dcf0, type: 3}
-  m_Name: LongRainbow
+  m_Name: TrailPlayer
   m_EditorClassIdentifier: 
   profile: {fileID: 0}
   active: 1
