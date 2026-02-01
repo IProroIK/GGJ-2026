@@ -7,7 +7,7 @@ namespace DefaultNamespace
     {
         [SerializeField] private string playerTag = "Player";
         [SerializeField] private List<GameObject> objectsToActivate;
-        [SerializeField] private TutorStep _tutorStep;
+        [SerializeField] private TutorStep _nextTutorStep;
         
         private bool _activated;
 
@@ -49,6 +49,8 @@ namespace DefaultNamespace
                 if (objectsToActivate[i] != null)
                     objectsToActivate[i].SetActive(false);
             }
+            
+            _nextTutorStep?.gameObject.SetActive(true);
         }
     }
 }
