@@ -8,7 +8,8 @@ namespace DefaultNamespace
         [SerializeField] private string playerTag = "Player";
         [SerializeField] private List<GameObject> objectsToActivate;
         [SerializeField] private TutorStep _nextTutorStep;
-        
+        [SerializeField] private bool _isFirstStep;
+
         private bool _activated;
 
         private void OnTriggerStay(Collider other)
@@ -44,6 +45,11 @@ namespace DefaultNamespace
 
         private void Deactivate()
         {
+            if (_isFirstStep)
+            {
+                _nextTutorStep?.gameObject.SetActive(true);
+                return;
+            }
             for (int i = 0; i < objectsToActivate.Count; i++)
             {
                 if (objectsToActivate[i] != null)
