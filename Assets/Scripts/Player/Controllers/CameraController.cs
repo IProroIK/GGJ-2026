@@ -30,34 +30,34 @@ namespace Player.Controllers
             _yRotation = transform.localRotation.eulerAngles.y;
         }
     
-        private void OnRightClickOnperformed(InputAction.CallbackContext _) =>
+        private void OnRightClickOnperformed(InputAction.CallbackContext _)
+        {
             _isRightPressed = true;
-    
-        private void OnRightClickOncanceled(InputAction.CallbackContext _) =>
+            if(_player.IsInputLocked)
+                _player.SwitchInputAsses(false);
+        }
+
+        private void OnRightClickOncanceled(InputAction.CallbackContext _)
+        {
             _isRightPressed = false;
-    
+            if(!_player.IsInputLocked)
+                _player.SwitchInputAsses(true);
+        }
+
         private void OnEnable() => _input.Enable();
         private void OnDisable() => _input.Disable();
     
         private void LateUpdate()
         {
-            if (_isRightPressed)
-            {
-                if(_player.IsInputLocked)
-                    _player.SwitchInputAsses(false);
-                
                 Vector2 delta = _input.Gameplay.LookDelta.ReadValue<Vector2>();
                 _yRotation += delta.x * sensitivity;
                 transform.localRotation = Quaternion.Euler(DefaultXRotation, _yRotation, 0f);
-            }
-            else
-            {
-                if(!_player.IsInputLocked)
-                    _player.SwitchInputAsses(true);
-
-                _yRotation = Mathf.LerpAngle(_yRotation, _defaultYRotation, Time.deltaTime * resetSpeed);
-                transform.localRotation = Quaternion.Euler(DefaultXRotation, _yRotation, 0f);
-            }
+                
+            // else if(!_isRightPressed)
+            // {
+            //     _yRotation = Mathf.LerpAngle(_yRotation, _defaultYRotation, Time.deltaTime * resetSpeed);
+            //     transform.localRotation = Quaternion.Euler(DefaultXRotation, _yRotation, 0f);
+            // }
         }
     }
 }

@@ -2,7 +2,9 @@ using UnityEngine;
 
 public interface IPlayerMotor
 {
-        Vector3 Position { get; }
-        void Move(Vector3 delta);
-        bool IsGrounded { get; }
+    bool IsGrounded { get; }
+    Vector3 Forward { get; }
+    Vector3 Right { get; }
+    void Move(Vector3 motion);
+    void Rotate(float yawDegrees);
 }
