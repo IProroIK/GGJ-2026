@@ -63,6 +63,7 @@ public class ColorByMask : MonoBehaviour
 
     private void OnEnable()
     {
+        _levelManager.LevelChanged += OnRestart;
         _levelManager.LevelRestarted += OnRestart;
         _maskManager.OnMaskEquip += OnMaskEquip;
         _maskManager.OnMaskUnequip += OnMaskUnequip;
@@ -70,6 +71,7 @@ public class ColorByMask : MonoBehaviour
     
     private void OnDisable()
     {
+        _levelManager.LevelChanged -= OnRestart;
         _levelManager.LevelRestarted -= OnRestart;
         _maskManager.OnMaskEquip -= OnMaskEquip;
         _maskManager.OnMaskUnequip -= OnMaskUnequip;

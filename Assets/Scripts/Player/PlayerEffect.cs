@@ -29,12 +29,14 @@ public class PlayerEffect : MonoBehaviour
     private void OnEnable()
     {
         _levelManager.LevelRestarted += OnLevelRestarted;
+        _levelManager.LevelChanged += OnLevelRestarted;
         _maskManager.OnMaskEquip += OnMaskEquip;
         _maskManager.OnMaskUnequip += OnMaskUnequip;
     }
 
     private void OnDisable()
     {
+        _levelManager.LevelChanged -= OnLevelRestarted;
         _levelManager.LevelRestarted -= OnLevelRestarted;
         _maskManager.OnMaskEquip -= OnMaskEquip;
         _maskManager.OnMaskUnequip -= OnMaskUnequip;
