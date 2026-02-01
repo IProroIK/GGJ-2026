@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: LevelPalette
+  m_EditorClassIdentifier: Assembly-CSharp::LevelPalette
+  walkableFloors:
+  - {fileID: 1890052976583762, guid: 53b9e2e8c2c1ed2439a09c2ab3fb11e4, type: 3}
+  - {fileID: 1890052976583762, guid: 53b9e2e8c2c1ed2439a09c2ab3fb11e4, type: 3}
+  - {fileID: 1400228509039700, guid: 1e3e89a9932575644ae6697c585dc150, type: 3}
+  - {fileID: 1261312191591634, guid: a95f32ffd89eb5a4eb1bbe0715cb0b28, type: 3}
+  lavaFloors:
+  - {fileID: 1070044224356388, guid: 282340fd049b4644da5bc6fce170eb17, type: 3}
+  - {fileID: 1321884185926494, guid: 6883323c03b6ba848b47a1a7d7fcefe0, type: 3}
+  - {fileID: 1981395108020200, guid: b46cdfd9e5d379f4eab9e6714883dfa1, type: 3}
+  - {fileID: 1946108817380422, guid: a7f5f2f198a28104384df4df105e5347, type: 3}
+  rockBlocks:
+  - {fileID: 1298528465503338, guid: d0b35f4d2aba62a4ab7d123cb5751d56, type: 3}
+  - {fileID: 1946108817380422, guid: a7f5f2f198a28104384df4df105e5347, type: 3}
+  wallBlocks:
+  - {fileID: 1298528465503338, guid: d0b35f4d2aba62a4ab7d123cb5751d56, type: 3}
+  - {fileID: 1890052976583762, guid: 53b9e2e8c2c1ed2439a09c2ab3fb11e4, type: 3}
+  - {fileID: 1084792284193470, guid: 2082cec8728948b428a7482c60e6b855, type: 3}
+  obstacles:
+  - {fileID: 1431485622815246, guid: 60a72481ea8500d448d43ef056f1a995, type: 3}
+  - {fileID: 1431485622815246, guid: 60a72481ea8500d448d43ef056f1a995, type: 3}
+  - {fileID: 1068987669586788, guid: 88d74c745a4fad049b1d3c84ed817ce7, type: 3}
+  - {fileID: 1542571462352766, guid: 892374ed107d6f0439dc082f5954084d, type: 3}
+  - {fileID: 1524076911061018, guid: 080829eaedb3d164896cf6e00e23faec, type: 3}
+  - {fileID: 1235664962263482, guid: ac18c1d60f880c640a183ca4687b7d1c, type: 3}
+  - {fileID: 1755177990973152, guid: ecfad8a1a04f9504dbb164f062aaced1, type: 3}
+  - {fileID: 1644708134816684, guid: 60d022d826b2fb04eb849dc0b2717c91, type: 3}
+  - {fileID: 1108214630671254, guid: 82fdc931f2d93d74597feb8b038ce48f, type: 3}
+  - {fileID: 1593169746609854, guid: 3cf1b9c6c7c4d584288f0e9300b6190d, type: 3}
+  - {fileID: 1890052976583762, guid: 53b9e2e8c2c1ed2439a09c2ab3fb11e4, type: 3}
+  - {fileID: 1508987628082340, guid: 0082a8843894b504c8cf36caced56a09, type: 3}
+  - {fileID: 1400228509039700, guid: 1e3e89a9932575644ae6697c585dc150, type: 3}
+  - {fileID: 1865219566725350, guid: f1cef89134706d5409ed1bc351895d4f, type: 3}
+  - {fileID: 1261312191591634, guid: a95f32ffd89eb5a4eb1bbe0715cb0b28, type: 3}
+  - {fileID: 1620647005149138, guid: d4648d15da2d3ad4990015204a112802, type: 3}
+  - {fileID: 1084792284193470, guid: 2082cec8728948b428a7482c60e6b855, type: 3}
+  - {fileID: 1654105625470868, guid: 5a2a14fa952f0394e808a25703dc77fd, type: 3}
+  - {fileID: 1385105661527438, guid: 1bee6f5e61fa4ac428abe68da16660d8, type: 3}
+  - {fileID: 1885473929928702, guid: 2cd9ea44444ec4462b1bf511ca06afcd, type: 3}
+  stairUpPrefab: {fileID: 1593169746609854, guid: 3cf1b9c6c7c4d584288f0e9300b6190d, type: 3}
