@@ -25,10 +25,12 @@ public class PhysicsDragController : MonoBehaviour
     private Vector3 _targetPosition;
     private float _dragDepth;
     private MaskManager _maskManager;
+    private Player.Player _player;
 
     [Inject]
-    private void Construct(MaskManager maskManager)
+    private void Construct(MaskManager maskManager, Player.Player player)
     {
+        _player = player;
         _maskManager = maskManager;
     }
     

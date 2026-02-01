@@ -154,6 +154,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""15285b76-007b-48d1-a5d6-9d58813d7f76"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LookDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""f6956ac7-cc0b-449f-8f59-d7a628cd4024"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -310,6 +328,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""DragStart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd3c9434-e72c-4cf7-b335-241f9274ed59"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e5e4c2b-ddfd-400f-821a-7b5f06a2c830"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -325,6 +365,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_OpenMaskPopup = m_Gameplay.FindAction("OpenMaskPopup", throwIfNotFound: true);
         m_Gameplay_Navigate = m_Gameplay.FindAction("Navigate", throwIfNotFound: true);
         m_Gameplay_DragStart = m_Gameplay.FindAction("DragStart", throwIfNotFound: true);
+        m_Gameplay_RightClick = m_Gameplay.FindAction("RightClick", throwIfNotFound: true);
+        m_Gameplay_LookDelta = m_Gameplay.FindAction("LookDelta", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -412,6 +454,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_OpenMaskPopup;
     private readonly InputAction m_Gameplay_Navigate;
     private readonly InputAction m_Gameplay_DragStart;
+    private readonly InputAction m_Gameplay_RightClick;
+    private readonly InputAction m_Gameplay_LookDelta;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -451,6 +495,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/DragStart".
         /// </summary>
         public InputAction @DragStart => m_Wrapper.m_Gameplay_DragStart;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/RightClick".
+        /// </summary>
+        public InputAction @RightClick => m_Wrapper.m_Gameplay_RightClick;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/LookDelta".
+        /// </summary>
+        public InputAction @LookDelta => m_Wrapper.m_Gameplay_LookDelta;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -498,6 +550,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DragStart.started += instance.OnDragStart;
             @DragStart.performed += instance.OnDragStart;
             @DragStart.canceled += instance.OnDragStart;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
+            @LookDelta.started += instance.OnLookDelta;
+            @LookDelta.performed += instance.OnLookDelta;
+            @LookDelta.canceled += instance.OnLookDelta;
         }
 
         /// <summary>
@@ -530,6 +588,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DragStart.started -= instance.OnDragStart;
             @DragStart.performed -= instance.OnDragStart;
             @DragStart.canceled -= instance.OnDragStart;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
+            @LookDelta.started -= instance.OnLookDelta;
+            @LookDelta.performed -= instance.OnLookDelta;
+            @LookDelta.canceled -= instance.OnLookDelta;
         }
 
         /// <summary>
@@ -619,5 +683,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDragStart(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RightClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRightClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LookDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLookDelta(InputAction.CallbackContext context);
     }
 }

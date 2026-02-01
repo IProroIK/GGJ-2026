@@ -12,6 +12,8 @@ namespace Player
     [RequireComponent(typeof(CharacterController), typeof(Animator))]
     public sealed class Player : MonoBehaviour
     {
+        public bool IsInputLocked { get; private set; }
+
         [Header("Movement")]
         [SerializeField] private Stats _playerStats;
         
@@ -118,6 +120,8 @@ namespace Player
 
         public void SwitchInputAsses(bool isEnabled)
         {
+            IsInputLocked = isEnabled;
+            
             if(isEnabled)
                 _moveAction.Enable();
             else
@@ -133,21 +137,22 @@ namespace Player
 
         private void RotateTowardsMouse()
         {
-            Ray ray = _camera.ScreenPointToRay(_mouseScreenPos);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _groundMask))
-            {
-                Vector3 direction = hit.point - transform.position;
-                direction.y = 0f; 
-                
-                if (direction.sqrMagnitude < 0.001f)
-                    return;
-
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = targetRotation;
-            }
+            Vector3 mouseWorldPos = _camera.ScreenToWorldPoint(new Vector3(
+                _mouseScreenPos.x, 
+                _mouseScreenPos.y, 
+                _camera.WorldToScreenPoint(transform.position).z
+            ));
+    
+            Vector3 direction = mouseWorldPos - transform.position;
+            direction.y = 0f;
+    
+            if (direction.sqrMagnitude < 0.001f)
+                return;
+    
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = targetRotation;
         }
-
+        
         private void OnLook(InputAction.CallbackContext ctx)
         {
             _mouseScreenPos = ctx.ReadValue<Vector2>();
