@@ -23,7 +23,7 @@ namespace Objectives
             _player = player;
         }
 
-        private void Awake()
+        private void Start()
         {
             Application.targetFrameRate = 120;
             LoadLevel(0);
@@ -40,12 +40,15 @@ namespace Objectives
 
         public void LoadNextLevel()
         {
-            Destroy(CurrentLevel);
-            CurrentLevelIndex++;
-            CurrentLevelIndex = Mathf.Clamp(CurrentLevelIndex, 0, _levels.Count - 1);
+            if (_levels.Count == 0)
+                return;
+
+            if (CurrentLevel != null)
+                Destroy(CurrentLevel);
+
+            CurrentLevelIndex = (CurrentLevelIndex + 1) % _levels.Count;
             LoadLevel(CurrentLevelIndex);
         }
-        
         public void RestartLevel()
         {
             Destroy(CurrentLevel);
