@@ -1867,6 +1867,15 @@ MonoBehaviour:
   _height: 7
   _smoothSpeed: 5
   _rotationSmoothSpeed: 8
+  _enableYawRotation: 1
+  _initialYaw: -45
+  _yawSmoothSpeed: 8
+  _orbitAroundTarget: 1
+  _yawInputAxis: 
+  _yawInputSensitivity: 120
+  _clampYaw: 0
+  _minYaw: -180
+  _maxYaw: 180
   _enableDynamicZoom: 1
   _bossZoomDistance: 22
   _zoomSpeed: 2
