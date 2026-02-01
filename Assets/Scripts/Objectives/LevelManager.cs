@@ -25,6 +25,7 @@ namespace Objectives
 
         private void Awake()
         {
+            Application.targetFrameRate = 120;
             LoadLevel(0);
         }
         
