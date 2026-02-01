@@ -92,7 +92,7 @@ namespace Mask
             {
                 Enums.MaskType.None,
             };
-            
+            CurrentMask = Enums.MaskType.None;
             OnMaskUpdated?.Invoke(_availableMasks);
         }
     }
