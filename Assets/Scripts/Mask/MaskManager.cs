@@ -16,6 +16,7 @@ namespace Mask
 
         
         public Enums.MaskType CurrentMask { get; private set; }
+        public IReadOnlyList<Enums.MaskType> AvailableMasks => _availableMasks;
 
         private List<Enums.MaskType> _availableMasks;
         private LevelManager _levelManager;
@@ -60,11 +61,21 @@ namespace Mask
 #endif
         }
         
-        public void SetMask(Enums.MaskType mask)
+        public bool TrySetMask(Enums.MaskType mask)
         {
+            if (_availableMasks == null || !_availableMasks.Contains(mask))
+            {
+                Debug.LogWarning($"Cannot equip unavailable mask {mask}.", this);
+                return false;
+            }
+
+            if (CurrentMask == mask)
+                return true;
+
             OnMaskUnequip?.Invoke(CurrentMask);
             CurrentMask = mask;
             OnMaskEquip?.Invoke(CurrentMask);
+            return true;
         }
 
         public void AddMask(Enums.MaskType mask)
@@ -81,6 +92,8 @@ namespace Mask
 
         public void RemoveMask(Enums.MaskType mask)
         {
+            if (CurrentMask == mask && mask != Enums.MaskType.None)
+                TrySetMask(Enums.MaskType.None);
             _availableMasks.Remove(mask);
             
             OnMaskUpdated?.Invoke(_availableMasks);

@@ -33,10 +33,14 @@ namespace Player
         private CharacterController _controller;
         private MaskManager _maskManager;
         private LevelManager _levelManager;
+        private GameUI.MaskPopup _maskPopup;
+        private bool _maskPopupOpen;
+        private bool _movementEnabledBeforeMaskPopup;
 
         [Inject]
-        private void Construct(MaskManager maskManager, LevelManager levelManager)
+        private void Construct(MaskManager maskManager, LevelManager levelManager, GameUI.MaskPopup maskPopup)
         {
+            _maskPopup = maskPopup;
             _levelManager = levelManager;
             _maskManager = maskManager;
         }
@@ -65,12 +69,14 @@ namespace Player
 
             _levelManager.LevelChanged += LevelChangedEventHandler;
             _levelManager.LevelRestarted += LevelChangedEventHandler;
+            _maskPopup.MaskPopupOpened += OnMaskPopupOpened;
         }
 
         private void OnDestroy()
         {
             _levelManager.LevelChanged -= LevelChangedEventHandler;
             _levelManager.LevelRestarted -= LevelChangedEventHandler;
+            _maskPopup.MaskPopupOpened -= OnMaskPopupOpened;
         }
 
         private void OnEnable()
@@ -113,6 +119,8 @@ namespace Player
 
         public void SwitchInputAsses(bool isEnabled)
         {
+            if (_maskPopupOpen && isEnabled)
+                return;
             IsInputLocked = isEnabled;
             if (isEnabled)
                 _moveAction.Enable();
@@ -134,12 +142,16 @@ namespace Player
 
         private void OnJump(InputAction.CallbackContext ctx)
         {
+            if (_maskPopupOpen)
+                return;
             if (ctx.performed)
                 _jumpPressed = true;
         }
 
         private void OnRun(InputAction.CallbackContext ctx)
         {
+            if (_maskPopupOpen)
+                return;
             if (ctx.started)
             {
                 _runPressed = true;
@@ -151,6 +163,24 @@ namespace Player
             if (ctx.canceled)
             {
                 _runPressed = false;
+            }
+        }
+
+        private void OnMaskPopupOpened(bool open)
+        {
+            if (open)
+            {
+                _movementEnabledBeforeMaskPopup = _moveAction.enabled;
+                _maskPopupOpen = true;
+                SwitchInputAsses(false);
+                _moveInput = Vector2.zero;
+                _jumpPressed = false;
+                _runPressed = false;
+            }
+            else
+            {
+                _maskPopupOpen = false;
+                SwitchInputAsses(_movementEnabledBeforeMaskPopup);
             }
         }
 

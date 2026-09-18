@@ -8,6 +8,8 @@ namespace Mask.Controllers
 {
 public class PhysicsMoveController : MonoBehaviour
 {
+    public bool IsHoldingObject => _currentDraggedObject != null;
+
     [Header("Input")]
     [SerializeField] private InputActionReference lookPositionAction;
     [SerializeField] private InputActionReference dragAction;
@@ -28,10 +30,13 @@ public class PhysicsMoveController : MonoBehaviour
     private float _dragDepth;
     private float _dragPlaneY;
     private MaskManager _maskManager;
+    private GameUI.MaskPopup _maskPopup;
+    private bool _maskPopupOpen;
 
     [Inject]
-    private void Construct(MaskManager maskManager)
+    private void Construct(MaskManager maskManager, GameUI.MaskPopup maskPopup)
     {
+        _maskPopup = maskPopup;
         _maskManager = maskManager;
     }
 
@@ -40,12 +45,14 @@ public class PhysicsMoveController : MonoBehaviour
         _mainCamera = Camera.main;
         _maskManager.OnMaskUnequip += Reset;
         _maskManager.OnMaskEquip += Reset;
+        _maskPopup.MaskPopupOpened += OnMaskPopupOpened;
     }
 
     private void OnDestroy()
     {
         _maskManager.OnMaskUnequip -= Reset;
         _maskManager.OnMaskEquip -= Reset;
+        _maskPopup.MaskPopupOpened -= OnMaskPopupOpened;
     }
 
     private void OnEnable()
@@ -64,12 +71,13 @@ public class PhysicsMoveController : MonoBehaviour
         
         dragAction.action.Disable();
         lookPositionAction.action.Disable();
-        
-
+        Reset(_maskManager.CurrentMask);
     }
 
     private void OnDragPerformed(InputAction.CallbackContext context)
     {
+        if (_maskPopupOpen || _maskManager.CurrentMask != Enums.MaskType.Mover)
+            return;
         if (_currentDraggedObject != null && _maskManager.CurrentMask == Enums.MaskType.Mover) return;
         
         Vector2 mousePosition = lookPositionAction.action.ReadValue<Vector2>();
@@ -138,10 +146,17 @@ public class PhysicsMoveController : MonoBehaviour
         }
     }
     
+    private void OnMaskPopupOpened(bool open)
+    {
+        _maskPopupOpen = open;
+        if (open)
+            Reset(_maskManager.CurrentMask);
+    }
+
     private void Reset(Enums.MaskType obj)
     {
         if (_currentDraggedObject == null ) return;
-        _currentDraggedObject.linearDamping = 0.5f; 
+        _currentDraggedObject.linearDamping = _originalLinearDamping;
         _currentDraggedObject = null;
     }
 }

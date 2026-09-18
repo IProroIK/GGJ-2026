@@ -1,84 +1,62 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
+[RequireComponent(typeof(RectTransform), typeof(CanvasGroup))]
 public class MaskItemView : MonoBehaviour
 {
     [SerializeField] private Image _icon;
     [SerializeField] private CanvasGroup _canvasGroup;
-
     private RectTransform _rect;
-    private Tween _move;
-    private Tween _scale;
-    private Sequence _fade;
-
-    private const float MainScale = 1.4f;
-    private const float SideScale = 0.85f;
 
     private void Awake()
     {
         _rect = GetComponent<RectTransform>();
         if (_canvasGroup == null)
             _canvasGroup = GetComponent<CanvasGroup>();
+        if (_icon == null)
+            _icon = GetComponent<Image>();
+        var background = GetComponent<Image>();
+        if (background != null && background != _icon)
+            background.enabled = false;
+        _icon.raycastTarget = false;
+        _icon.preserveAspect = true;
+        _canvasGroup.blocksRaycasts = false;
+        _canvasGroup.interactable = false;
     }
 
-    public void SetData(Sprite sprite, bool animate = true)
+    public void SetData(Sprite sprite)
     {
-        if (!animate || _icon.sprite == null)
+        _icon.raycastTarget = false;
+        _icon.preserveAspect = true;
+        _canvasGroup.blocksRaycasts = false;
+        _canvasGroup.interactable = false;
+        _icon.sprite = sprite;
+        _icon.enabled = sprite != null;
+    }
+
+    public void SetLayout(Vector2 position, float size)
+    {
+        // A pooled slot may be configured before its first activation/Awake.
+        if (_rect == null)
+            _rect = (RectTransform)transform;
+        _rect.anchorMin = _rect.anchorMax = _rect.pivot = new Vector2(0.5f, 0.5f);
+        _rect.anchoredPosition = position;
+        _rect.sizeDelta = Vector2.one * size;
+        _rect.localRotation = Quaternion.identity;
+        if (_icon.rectTransform != _rect)
         {
-            // Instant change, no animation
-            _fade?.Kill();
-            _icon.sprite = sprite;
-            if (_canvasGroup != null)
-                _canvasGroup.alpha = 1f;
-            return;
+            _icon.rectTransform.anchorMin = _icon.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            _icon.rectTransform.anchoredPosition = Vector2.zero;
+            _icon.rectTransform.sizeDelta = Vector2.one * size;
         }
-
-        // Animated change
-        _fade?.Kill();
-        
-        var sequence = DOTween.Sequence();
-        sequence.Append(_canvasGroup.DOFade(0f, 0.1f))
-            .AppendCallback(() => _icon.sprite = sprite)
-            .Append(_canvasGroup.DOFade(1f, 0.15f))
-            .SetUpdate(true);
-        
-        _fade = sequence;
     }
 
-    public void Move(Vector2 pos, float duration)
+    public void SetHovered(bool hovered, float hoverScale)
     {
-        _move?.Kill();
-        _move = _rect.DOAnchorPos(pos, duration)
-            .SetEase(Ease.OutCubic)
-            .SetUpdate(true);
-    }
-
-    public void SetMain(float duration)
-    {
-        _scale?.Kill();
-        _scale = _rect.DOScale(MainScale, duration)
-            .SetEase(Ease.OutBack)
-            .SetUpdate(true);
-    }
-
-    public void SetSecondary(float duration)
-    {
-        _scale?.Kill();
-        _scale = _rect.DOScale(SideScale, duration)
-            .SetEase(Ease.OutCubic)
-            .SetUpdate(true);
-    }
-
-    public void SetInstant(Vector2 pos, float scale)
-    {
-        DOTween.Kill(_rect);
-        _fade?.Kill();
-        
-        _rect.anchoredPosition = pos;
-        _rect.localScale = Vector3.one * scale;
-        
-        if (_canvasGroup != null)
-            _canvasGroup.alpha = 1f;
+        if (_rect == null)
+            _rect = (RectTransform)transform;
+        _rect.localScale = Vector3.one * (hovered ? hoverScale : 1f);
+        _canvasGroup.alpha = hovered ? 1f : 0.78f;
+        _icon.color = hovered ? Color.white : new Color(0.88f, 0.91f, 0.94f, 1f);
     }
 }

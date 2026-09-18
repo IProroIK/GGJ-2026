@@ -9,6 +9,7 @@ using Zenject;
 public class PlayerEffect : MonoBehaviour
 {
     [Header("Rules")] [SerializeField, TableList] private List<TrailEffectPlayer> _effects = new();
+    [Header("Particles")] [SerializeField] private List<ParticleSystem.Particle> _particles;
 
     private LevelManager _levelManager;
     private MaskManager _maskManager;

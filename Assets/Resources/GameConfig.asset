@@ -15,3 +15,4 @@ MonoBehaviour:
   <GamePlay>k__BackingField:
     <ChangeStateToTopGame>k__BackingField: 1
     <MaskData>k__BackingField: {fileID: 11400000, guid: 3196b946ab77db4409aeb58c14abf5d2, type: 2}
+    _maskPopupTimeScale: 0.15

@@ -1,5 +1,6 @@
 ﻿#region Using statements
 
+using System;
 using Bitgem.Core;
 using System.Collections;
 using System.Collections.Generic;
@@ -63,6 +64,7 @@ namespace Bitgem.VFX.StylisedWater
 
         #region Private methods
 
+        [Obsolete("Obsolete")]
         private void ensureReferences()
         {
             // ensure a mesh filter
