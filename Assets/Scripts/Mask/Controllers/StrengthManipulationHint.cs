@@ -38,7 +38,8 @@ namespace Mask.Controllers
         {
             if (_text == null) return;
             _text.text = "Click / E / A / Cross: Release   |   Mouse / Right Stick: Move\n" +
-                         "Wheel / D-Pad Up Down: Distance   |   Hold R / RB / R1 + Mouse / D-Pad: Rotate";
+                         "Wheel / D-Pad Up Down: Distance   |   Hold R / RB / R1 + Mouse / D-Pad: Rotate\n" +
+                         "Hold Right Mouse / LT / ZL: Orbit camera";
             _text.enabled = true;
         }
 

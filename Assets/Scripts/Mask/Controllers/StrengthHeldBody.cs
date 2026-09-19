@@ -36,7 +36,8 @@ namespace Mask.Controllers
             float fraction = 1f - Mathf.Exp(-smoothing * fixedDeltaTime);
             Vector3 step = Vector3.ClampMagnitude(delta * fraction, moveSpeed * fixedDeltaTime);
             if (step.sqrMagnitude > 0.000001f &&
-                _body.SweepTest(step.normalized, out RaycastHit hit, step.magnitude + _skin))
+                _body.SweepTest(step.normalized, out RaycastHit hit, step.magnitude + _skin,
+                    QueryTriggerInteraction.Ignore))
                 step = step.normalized * Mathf.Max(0f, hit.distance - _skin);
             _body.linearVelocity = step / fixedDeltaTime;
             _body.angularVelocity = Vector3.zero;
@@ -44,6 +45,11 @@ namespace Mask.Controllers
                 rotationSpeed * fixedDeltaTime);
             if (CanRotateTo(nextRotation))
                 _body.MoveRotation(nextRotation);
+        }
+
+        public Vector3 GetPosition()
+        {
+            return _body.position;
         }
 
         private bool CanRotateTo(Quaternion candidate)

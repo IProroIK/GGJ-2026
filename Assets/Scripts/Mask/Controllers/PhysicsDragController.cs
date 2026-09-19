@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Objectives;
 using Settings;
@@ -10,7 +11,13 @@ namespace Mask.Controllers
     public class PhysicsDragController : MonoBehaviour
     {
         public bool IsHoldingObject => _held != null;
-
+        public float MaxDragDistance => _maxDragDistance;
+        public Transform HeldTransform => _held != null ? _held.transform : null;
+        public bool IsCameraOrbitRequested => IsHoldingObject &&
+            (_orbitMouse.IsPressed() || _orbitModifier.IsPressed());
+        public event Action<Vector3> HeldObjectUpdatedPositionEvent;
+        public event Action<bool> ObjectGrabbedEvent;
+        
         [Header("Input")]
         [SerializeField] private InputActionReference lookPositionAction;
         [SerializeField] private InputActionReference dragAction;
@@ -40,6 +47,10 @@ namespace Mask.Controllers
         private float _screenX;
         private float _screenY;
         private Vector2 _rotationPixels;
+        private Vector3 _holdForward, _holdRight, _holdUp;
+        private InputAction _orbitMouse, _orbitModifier;
+        private InputAction[] _heldActions;
+        private bool _wasOrbiting;
         private bool _gamepadTargeting;
         private bool _popupOpen;
         private MaskManager _masks;
@@ -69,6 +80,9 @@ namespace Mask.Controllers
             _rotateMode = map.FindAction("ManipulateRotationMode", true);
             _cancel = map.FindAction("ManipulateCancel", true);
             _reset = map.FindAction("ManipulateReset", true);
+            _orbitMouse = map.FindAction("RightClick", true);
+            _orbitModifier = map.FindAction("CameraRecenter", true);
+            _heldActions = new[] { _stick, _pointer, _dpad, _wheel, _rotateMode, _cancel, _reset, _orbitMouse, _orbitModifier };
             _masks.OnMaskUnequip += OnMaskChanged;
             _masks.OnMaskEquip += OnMaskChanged;
             _masks.OnMaskUpdated += OnMasksUpdated;
@@ -141,12 +155,17 @@ namespace Mask.Controllers
             _screenX = x;
             _screenY = y;
             _depth = depth;
+            CacheHoldBasis();
+            _wasOrbiting = false;
             _desiredPosition = body.position;
             _desiredRotation = body.rotation;
             _rotationPixels = Vector2.zero;
             _motion = new StrengthHeldBody(body, _collisionSkin);
             SetHeldActions(true);
             UpdateHint();
+            
+            HeldObjectUpdatedPositionEvent?.Invoke(body.position);
+            ObjectGrabbedEvent?.Invoke(true);
         }
 
         private bool TryTarget(out Rigidbody body)
@@ -169,6 +188,23 @@ namespace Mask.Controllers
             return forward.sqrMagnitude > 0.001f ? forward.normalized : _player.transform.forward;
         }
 
+        private void CacheHoldBasis()
+        {
+            _holdForward = FlatForward();
+            _holdRight = _mainCamera.transform.right;
+            _holdUp = _mainCamera.transform.up;
+        }
+
+        private void RebaseHoldOffset()
+        {
+            // Preserve the world offset when the camera or its framing rotates.
+            Vector3 relative = _holdForward * _depth + _holdRight * _screenX + _holdUp * _screenY;
+            CacheHoldBasis();
+            _screenX = Vector3.Dot(relative, _holdRight);
+            _screenY = relative.y / Mathf.Max(0.1f, _holdUp.y);
+            _depth = Vector3.Dot(relative - _holdRight * _screenX - _holdUp * _screenY, _holdForward);
+        }
+
         private void Update()
         {
             if (_held == null)
@@ -178,8 +214,13 @@ namespace Mask.Controllers
                 return;
             }
             if (!CanManipulate || !_held.gameObject.activeInHierarchy) { Release(); return; }
-            Vector2 pointer = _pointer.ReadValue<Vector2>();
-            if (_rotateMode.IsPressed())
+            RebaseHoldOffset();
+            bool orbiting = IsCameraOrbitRequested;
+            bool suppressPointer = orbiting || _wasOrbiting;
+            _wasOrbiting = orbiting;
+            Vector2 pointer = suppressPointer ? Vector2.zero : _pointer.ReadValue<Vector2>();
+            if (orbiting) _rotationPixels = Vector2.zero;
+            else if (_rotateMode.IsPressed())
             {
                 _rotationPixels += pointer;
                 while (Mathf.Abs(_rotationPixels.x) >= _mousePixelsPerStep)
@@ -200,15 +241,17 @@ namespace Mask.Controllers
                 _rotationPixels = Vector2.zero;
                 Vector2 move = _stick.ReadValue<Vector2>() * (_movementSpeed * Time.deltaTime) +
                                pointer * _mouseMovementScale;
-                _screenX += move.x;
-                _screenY += move.y;
-                Vector2 screenOffset = Vector2.ClampMagnitude(new Vector2(_screenX, _screenY), _maxDragDistance);
-                _screenX = screenOffset.x;
-                _screenY = screenOffset.y;
-                _depth = Mathf.Clamp(_depth +
-                    _dpad.ReadValue<Vector2>().y * _depthMovementSpeed * Time.deltaTime +
-                    _wheel.ReadValue<Vector2>().y * _mouseWheelScale,
-                    _minHoldDistance, _maxDragDistance);
+                if (move.sqrMagnitude > 0.000001f)
+                {
+                    Vector2 screenOffset = Vector2.ClampMagnitude(new Vector2(_screenX + move.x, _screenY + move.y), _maxDragDistance);
+                    _screenX = screenOffset.x;
+                    _screenY = screenOffset.y;
+                }
+                float depthChange = _dpad.ReadValue<Vector2>().y * _depthMovementSpeed * Time.deltaTime +
+                    _wheel.ReadValue<Vector2>().y * _mouseWheelScale;
+                if (Mathf.Abs(depthChange) > 0.0001f)
+                    _depth = Mathf.Clamp(_depth + depthChange, Mathf.Min(_minHoldDistance, _depth),
+                        Mathf.Max(_maxDragDistance, _depth));
             }
             _desiredPosition = _player.transform.position + FlatForward() * _depth +
                                _mainCamera.transform.right * _screenX + _mainCamera.transform.up * _screenY;
@@ -222,11 +265,13 @@ namespace Mask.Controllers
             if (_held == null) return;
             _motion.Tick(_desiredPosition, _desiredRotation, _movementSmoothing,
                 _movementSpeed, _rotationSpeed, Time.fixedDeltaTime);
+            
+            HeldObjectUpdatedPositionEvent?.Invoke(_motion.GetPosition());
         }
 
         private void OnDpad(InputAction.CallbackContext context)
         {
-            if (_held == null || !_rotateMode.IsPressed()) return;
+            if (_held == null || IsCameraOrbitRequested || !_rotateMode.IsPressed()) return;
             Vector2 direction = context.ReadValue<Vector2>();
             if (Mathf.Abs(direction.x) > 0.5f) Rotate(Mathf.Sign(direction.x), 0f);
             if (Mathf.Abs(direction.y) > 0.5f) Rotate(0f, Mathf.Sign(direction.y));
@@ -262,8 +307,7 @@ namespace Mask.Controllers
 
         private void SetHeldActions(bool enabled)
         {
-            InputAction[] actions = { _stick, _pointer, _dpad, _wheel, _rotateMode, _cancel, _reset };
-            foreach (InputAction action in actions)
+            foreach (InputAction action in _heldActions)
             {
                 if (enabled) action.Enable();
                 else action.Disable();
@@ -279,6 +323,8 @@ namespace Mask.Controllers
             _rotationPixels = Vector2.zero;
             SetHeldActions(false);
             UpdateHint();
+            
+            ObjectGrabbedEvent?.Invoke(false);
         }
 
         private void UpdateHint()

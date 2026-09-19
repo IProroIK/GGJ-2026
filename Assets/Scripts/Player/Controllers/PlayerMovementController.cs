@@ -16,6 +16,7 @@ namespace Player.Controllers
         private const float RunSpeedModifier = 1.4f;
         private const float RotationSmoothTime = 0.12f;
         private float _rotationSmoothVelocity;
+        private bool _wasManipulating;
 
         public PlayerMovementController(
             IPlayerMotor motor,
@@ -31,16 +32,29 @@ namespace Player.Controllers
             Vector2 moveInput,
             bool jumpPressed,
             bool isRunning,
-            float deltaTime)
+            float deltaTime,
+            bool isManipulating = false,
+            Vector3 objectDirection = default,
+            float grabSmoothTime = 0.15f,
+            float grabMaxSpeed = 540f,
+            float grabMinimumDistance = 0.35f)
         {
-            Move(moveInput, jumpPressed, isRunning, deltaTime);
+            if (deltaTime <= 0f) return;
+            if (_wasManipulating != isManipulating)
+            {
+                _rotationSmoothVelocity = 0f;
+                _wasManipulating = isManipulating;
+            }
+            Move(moveInput, jumpPressed, isRunning, deltaTime, isManipulating,
+                objectDirection, grabSmoothTime, grabMaxSpeed, grabMinimumDistance);
         }
 
         private void Move(
             Vector2 moveInput,
             bool jumpPressed,
             bool isRunning,
-            float deltaTime)
+            float deltaTime, bool isManipulating, Vector3 objectDirection,
+            float grabSmoothTime, float grabMaxSpeed, float grabMinimumDistance)
         {
             // Movement direction relative to camera
             Vector3 moveDirection = Vector3.zero;
@@ -57,8 +71,14 @@ namespace Player.Controllers
                 cameraRight.Normalize();
 
                 moveDirection = (cameraForward * moveInput.y + cameraRight * moveInput.x).normalized;
+            }
 
-                float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+            objectDirection.y = 0f;
+            Vector3 facingDirection = isManipulating ? objectDirection : moveDirection;
+            float minimumDistance = isManipulating ? grabMinimumDistance : 0.01f;
+            if (facingDirection.sqrMagnitude >= minimumDistance * minimumDistance)
+            {
+                float targetAngle = Mathf.Atan2(facingDirection.x, facingDirection.z) * Mathf.Rad2Deg;
 
                 Vector3 forward = _motor.Forward;
                 forward.y = 0f;
@@ -71,12 +91,15 @@ namespace Player.Controllers
                     currentAngle,
                     targetAngle,
                     ref _rotationSmoothVelocity,
-                    RotationSmoothTime
+                    isManipulating ? grabSmoothTime : RotationSmoothTime,
+                    isManipulating ? grabMaxSpeed : Mathf.Infinity,
+                    deltaTime
                 );
 
                 float yawDelta = Mathf.DeltaAngle(currentAngle, smoothAngle);
                 _motor.Rotate(yawDelta);
             }
+            else _rotationSmoothVelocity = 0f;
 
             float speed = isRunning
                 ? _playerStats.GetSpeed() * RunSpeedModifier
