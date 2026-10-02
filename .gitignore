@@ -63,6 +63,12 @@ sysinfo.txt
 *.unitypackage
 *.app
 
+# Documentation, logs, and local tests
+*.md
+*.log
+/Test/
+/Tests/
+
 # Crashlytics generated file
 crashlytics-build.properties
 
