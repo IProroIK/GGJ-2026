@@ -13,6 +13,9 @@ namespace Mask.Controllers
         public bool IsHoldingObject => _held != null;
         public float MaxDragDistance => _maxDragDistance;
         public Transform HeldTransform => _held != null ? _held.transform : null;
+        public Vector3 HeldHitPoint => _held != null
+            ? _held.transform.TransformPoint(_localHitPoint)
+            : Vector3.zero;
         public bool IsCameraOrbitRequested => IsHoldingObject &&
             (_orbitMouse.IsPressed() || _orbitModifier.IsPressed());
         public event Action<Vector3> HeldObjectUpdatedPositionEvent;
@@ -39,6 +42,7 @@ namespace Mask.Controllers
         [SerializeField] private Camera _mainCamera;
 
         private Rigidbody _held;
+        private Vector3 _localHitPoint;
         private StrengthHeldBody _motion;
         private bool _holding;
         private Vector3 _desiredPosition;
@@ -140,7 +144,7 @@ namespace Mask.Controllers
             if (!CanManipulate) return;
             if (_held != null) { Release(); return; }
             _gamepadTargeting = context.control.device is Gamepad;
-            if (!TryTarget(out Rigidbody body) || body.transform.IsChildOf(_player.transform)) return;
+            if (!TryTarget(out Rigidbody body, out Vector3 hitPoint) || body.transform.IsChildOf(_player.transform)) return;
 
             Vector3 relative = body.position - _player.transform.position;
             Vector3 right = _mainCamera.transform.right;
@@ -151,6 +155,8 @@ namespace Mask.Controllers
             if (depth < _minHoldDistance || depth > _maxDragDistance) return;
 
             _held = body;
+            // Keep the beam attached to the grabbed surface as the body moves and rotates.
+            _localHitPoint = body.transform.InverseTransformPoint(hitPoint);
             _holding = true;
             _screenX = x;
             _screenY = y;
@@ -168,9 +174,10 @@ namespace Mask.Controllers
             ObjectGrabbedEvent?.Invoke(true);
         }
 
-        private bool TryTarget(out Rigidbody body)
+        private bool TryTarget(out Rigidbody body, out Vector3 hitPoint)
         {
             body = null;
+            hitPoint = Vector3.zero;
             if (_mainCamera == null) return false;
             Ray ray = _gamepadTargeting
                 ? _mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f))
@@ -178,6 +185,7 @@ namespace Mask.Controllers
             if (!Physics.Raycast(ray, out RaycastHit hit, _raycastDistance, _draggableLayer,
                     QueryTriggerInteraction.Ignore)) return false;
             body = hit.rigidbody;
+            hitPoint = hit.point;
             return body != null && !body.isKinematic &&
                    Vector3.Distance(body.position, _player.transform.position) <= _maxDragDistance + 2f;
         }
@@ -336,7 +344,7 @@ namespace Mask.Controllers
                 _hint.ShowHeld();
                 return;
             }
-            if (TryTarget(out _)) _hint.ShowTarget();
+            if (TryTarget(out _, out _)) _hint.ShowTarget();
             else _hint.Hide();
         }
     }

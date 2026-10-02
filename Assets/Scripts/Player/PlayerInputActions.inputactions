@@ -7,6 +7,26 @@
             "id": "719c8d65-eef4-407a-8a49-5bf6417eadac",
             "actions": [
                 {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "c9c413ac-8d96-43cd-927c-43a9ee00d55a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Slide",
+                    "type": "Button",
+                    "id": "64bc1d48-bac7-4f67-b0fd-bde406ee5e63",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
                     "name": "Move",
                     "type": "Value",
                     "id": "4ea15c6b-9aeb-42ff-b696-cc2f7128e3af",
@@ -208,6 +228,50 @@
                 }
             ],
             "bindings": [
+                {
+                    "name": "",
+                    "id": "119b3bce-9647-46ac-ae3f-74b56e6d4f9e",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "40a1a680-e05a-48c6-8e48-785c2c7d1715",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4d038ea-4558-4999-94b6-a6299323832c",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30c7b425-fc1b-4c24-a4e2-fcd83c5174d9",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
                 {
                     "name": "2D Vector",
                     "id": "1f6a5bb4-e7b6-48f9-a952-3d42ab17845b",

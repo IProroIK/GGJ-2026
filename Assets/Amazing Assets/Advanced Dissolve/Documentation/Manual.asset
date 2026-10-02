@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9e8fc0591c7ec42ae3834ac2d84ad0, type: 3}
+  m_Name: Manual
+  m_EditorClassIdentifier: 
+  icon: {fileID: 2800000, guid: 888528d0d261e0d4cbfcaf5177bfd145, type: 3}
+  title: Advanced Dissolve
+  sections:
+  - heading: 
+    text: 
+    linkText: 
+    url: 
+    urlType: 0
+  - heading: Documentation
+    text: 
+    linkText: Open online documentation
+    url: https://amazing-assets.gitbook.io/advanced-dissolve
+    urlType: 0
+  - heading: Forum
+    text: 
+    linkText: Get answers
+    url: https://forum.unity.com/threads/advanced-dissolve.517354/
+    urlType: 0
+  - heading: Support and bug report
+    text: 
+    linkText: Submit a report
+    url: support@amazingassets.world
+    urlType: 1
+  - heading: asd
+    text: 
+    linkText: asd
+    url: asd
+    urlType: 1
+  loadedLayout: 0

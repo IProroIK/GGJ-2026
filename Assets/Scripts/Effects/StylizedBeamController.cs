@@ -92,10 +92,10 @@ namespace Effects
             }
         }
 
-        private void HeldObjectUpdatedPositionEventHandler(Vector3 position)
+        private void HeldObjectUpdatedPositionEventHandler(Vector3 _)
         {
             if (_beamEndPoint != null)
-                _beamEndPoint.position = position;
+                _beamEndPoint.position = _physicsDragController.HeldHitPoint;
         }
     }
 }

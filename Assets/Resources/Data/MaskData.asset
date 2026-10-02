@@ -20,33 +20,31 @@ MonoBehaviour:
   - MaskType: 1
     MaskSprite: {fileID: 21300000, guid: 95a0a6c6fc55bf748998d6ea7a565d26, type: 3}
     MaskName: <color=#FF0000>Mask of Strength</color>
-    MaskDescription: '<color=#FF0000>Effect:</color> Allows the player to lift highlighted
-      blocks and move them freely in space.
+    MaskDescription: '<color=#FF0000>Effect:</color> Allows the player to lift highlighted blocks and move them freely in space.
 
-      <color=#FF0000>Debuff:</color>
-      Movement speed is reduced. Jump height is lowered.'
+      <color=#FF0000>Debuff:</color> Movement speed is reduced. Jump height is lowered.'
   - MaskType: 3
     MaskSprite: {fileID: 21300000, guid: 154a86f0d3be2104d81f09b4344dd1d8, type: 3}
     MaskName: <color=#6CFF8E>Mask of Agility</color>
-    MaskDescription: '<color=#6CFF8E>Effect:</color> Grants the ability to perform
-      a double jump.
+    MaskDescription: '<color=#6CFF8E>Effect:</color> Double jump: Space in the air.
 
-      Increases overall movement speed.'
+      Dash: F. Slide: hold Left Ctrl while moving.
+
+      Wall run: move alongside a wall in the air.
+
+
+      Run and normal jump work with every mask.'
   - MaskType: 2
     MaskSprite: {fileID: 21300000, guid: 406a9c554cee5d34ba86638da77496a1, type: 3}
     MaskName: <color=#9C6CFF>Mask of Sight</color>
-    MaskDescription: <color=#9C6CFF>Effect:</color> Reveals hidden blocks and invisible
-      platforms.
+    MaskDescription: <color=#9C6CFF>Effect:</color> Reveals hidden blocks and invisible platforms.
   - MaskType: 4
     MaskSprite: {fileID: 21300000, guid: f9b4bd9a1d96af14bbdb6b4c6077c5b6, type: 3}
     MaskName: <color=#5DA9FF>Mask of Might</color>
-    MaskDescription: '<color=#5DA9FF>Effect:</color> Allows the player to push and
-      pull highlighted blocks along the ground.
+    MaskDescription: '<color=#5DA9FF>Effect:</color> Allows the player to push and pull highlighted blocks along the ground.
 
-      <color=#5DA9FF>Debuff:</color>
-      Movement speed is reduced. Jump height is lowered.'
+      <color=#5DA9FF>Debuff:</color> Movement speed is reduced. Jump height is lowered.'
   - MaskType: 5
     MaskSprite: {fileID: 21300000, guid: b96dcd99fb02b5446a5c5f5c05c406c1, type: 3}
     MaskName: <color=#B0B0B0>Mask of Shadow</color>
-    MaskDescription: <color=#B0B0B0>Effect:</color> Allows the player to pass through
-      specific shadow-marked walls.
+    MaskDescription: <color=#B0B0B0>Effect:</color> Allows the player to pass through specific shadow-marked walls.

@@ -3,19 +3,21 @@ using Zenject;
 
 namespace Objectives
 {
+    [RequireComponent(typeof(Collider))]
     public class DeathZone : MonoBehaviour
     {
-        private LevelManager _levelManager;
+        private Player.Player _player;
 
         [Inject]
-        private void Construct(LevelManager levelManager)
+        private void Construct(Player.Player player)
         {
-            _levelManager = levelManager;
+            _player = player;
         }
         
-        public void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            _levelManager.RestartLevel();
+            if (_player != null && other.transform.IsChildOf(_player.transform))
+                _player.Health.Kill();
         }
     }
 }

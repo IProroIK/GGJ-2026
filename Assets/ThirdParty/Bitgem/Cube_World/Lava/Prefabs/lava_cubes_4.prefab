@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 4561209618390318}
   - component: {fileID: 205820876255895244}
   - component: {fileID: 2051746284796657795}
+  - component: {fileID: 7779770576651997071}
   m_Layer: 6
   m_Name: lava_cubes_4
   m_TagString: Untagged
@@ -313,7 +314,7 @@ LODGroup:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946108817380422}
-  serializedVersion: 2
+  serializedVersion: 3
   m_LocalReferencePoint: {x: 0, y: 0.00039952993, z: 0.0010752678}
   m_Size: 1.1392959
   m_FadeMode: 0
@@ -333,6 +334,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23242083786192804}
   m_Enabled: 1
+  m_GlobalIlluminationLOD: 0
 --- !u!65 &2051746284796657795
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -354,3 +356,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7779770576651997071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946108817380422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f70116e96ecff428c4e35a43fd404a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Objectives.DamageZone
+  _mode: 1
+  _damage: 10
+  _damageInterval: 0.5
+  _knockbackSpeed: 0
+  _upwardSpeed: 0

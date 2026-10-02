@@ -1,0 +1,17 @@
+{
+    "name": "AmazingAssets.AdvancedDissolve.Examples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0539863720804864389d74d2254a0767",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

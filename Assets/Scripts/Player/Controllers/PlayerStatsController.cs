@@ -4,10 +4,10 @@ using Settings;
 
 namespace Player.Controllers
 {
-    public class PlayerStatsController
+    public class PlayerStatsController : System.IDisposable
     {
-        private MaskManager _maskManager;
-        private Stats _playerStats;
+        private readonly MaskManager _maskManager;
+        private readonly Stats _playerStats;
 
         public PlayerStatsController(MaskManager maskManager, Stats playerStats)
         {
@@ -15,6 +15,19 @@ namespace Player.Controllers
             _maskManager = maskManager;
 
             _maskManager.OnMaskEquip += OnMaskEquipEventHandler;
+            _maskManager.OnMaskUnequip += OnMaskUnequipped;
+            OnMaskEquipEventHandler(_maskManager.CurrentMask);
+        }
+
+        public void Dispose()
+        {
+            _maskManager.OnMaskEquip -= OnMaskEquipEventHandler;
+            _maskManager.OnMaskUnequip -= OnMaskUnequipped;
+        }
+
+        private void OnMaskUnequipped(Enums.MaskType type)
+        {
+            ResetToDefault();
         }
 
         private void OnMaskEquipEventHandler(Enums.MaskType type)
@@ -24,12 +37,13 @@ namespace Player.Controllers
             switch (type)
             {
                 case Enums.MaskType.Strength:
-                    case Enums.MaskType.Mover:
+                case Enums.MaskType.Mover:
                     _playerStats.GravityModifier = 2;
                     _playerStats.JumpForceModifier = 0.5f;
                     _playerStats.SpeedModifier = 0.6f;
                     break;
                 case Enums.MaskType.Agility:
+                    _playerStats.SpeedModifier = 1.15f;
                     _playerStats.JumpCountModifier = 2;
                     break;
             }

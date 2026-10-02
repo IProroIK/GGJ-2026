@@ -9,7 +9,7 @@ namespace Mask.Controllers
     {
         [SerializeField] private Transform _circle;
         [Tooltip("Measured world-space diameter at the circle's original prefab scale.")]
-        [SerializeField, Min(0.01f)] private float _referenceDiameter = 6.8f;
+        [SerializeField] private float _referenceDiameter = 6.8f;
 
         private MaskManager _masks;
         private PhysicsDragController _drag;
